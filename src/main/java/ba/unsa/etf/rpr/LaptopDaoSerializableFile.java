@@ -8,8 +8,10 @@ public class LaptopDaoSerializableFile implements LaptopDao {
     private File file;
     private ArrayList<Laptop> laptopi;
 
-    public LaptopDaoSerializableFile(File file) {
+    public LaptopDaoSerializableFile() throws IOException {
         this.file = new File("serializable.dat");
+        ObjectInputStream oos = new ObjectInputStream(new FileInputStream(file));
+        this.laptopi = new ArrayList<>();
     }
 
     @Override
@@ -46,7 +48,13 @@ public class LaptopDaoSerializableFile implements LaptopDao {
     public List<Laptop> vratiPodatkeIzDatoteke() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            this.laptopi.addAll((ArrayList<Laptop>) ois.readObject());
+            while(true) {
+                try {
+                    laptopi.add((Laptop) ois.readObject());
+                } catch(IOException e) {
+                    break;
+                }
+            }
             ois.close();
         } catch(ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);

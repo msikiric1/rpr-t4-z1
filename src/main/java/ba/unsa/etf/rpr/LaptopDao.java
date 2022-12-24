@@ -1,12 +1,13 @@
 package ba.unsa.etf.rpr;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface LaptopDao {
     void dodajLaptopUListu(Laptop laptop);
-    void dodajLaptopUFile(Laptop laptop);
+    void dodajLaptopUFile(Laptop laptop) throws IOException;
     Laptop getLaptop(String procesor);
     void napuniListu(ArrayList<Laptop> laptopi);
-    List<Laptop> vratiPodatkeIzDatoteke();
+    List<Laptop> vratiPodatkeIzDatoteke() throws IOException;
 }

@@ -14,6 +14,8 @@ public class Laptop implements Serializable {
     private String grafickaKartica;
     private double velicinaEkrana;
 
+    public Laptop(){}
+
     public Laptop(String brend, String model, double cijena, int ram, int hdd, int ssd, String procesor, String grafickaKartica, double velicinaEkrana) {
         this.brend = brend;
         this.model = model;
