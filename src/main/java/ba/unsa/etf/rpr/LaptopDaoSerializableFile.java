@@ -51,5 +51,6 @@ public class LaptopDaoSerializableFile implements LaptopDao {
         } catch(ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
+        return this.laptopi;
     }
 }
