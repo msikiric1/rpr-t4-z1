@@ -34,12 +34,12 @@ public class LaptopDaoXMLFile implements LaptopDao {
     }
 
     @Override
-    public Laptop getLaptop(String procesor) {
+    public Laptop getLaptop(String procesor) throws NeodgovarajuciProcesorException {
         for(Laptop laptop : laptopi) {
             if(laptop.getProcesor().equals(procesor))
                 return laptop;
         }
-        return null;
+        throw new NeodgovarajuciProcesorException("Laptop se ne nalazi u listi");
     }
 
     @Override

@@ -20,23 +20,20 @@ public class LaptopDaoSerializableFile implements LaptopDao {
     }
 
     @Override
-    public void dodajLaptopUFile(Laptop laptop) {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-            oos.writeObject(laptop);
-            oos.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void dodajLaptopUFile(Laptop laptop) throws IOException {
+        laptopi.add(laptop);
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+        oos.writeObject(laptopi);
+        oos.close();
     }
 
     @Override
-    public Laptop getLaptop(String procesor) {
+    public Laptop getLaptop(String procesor) throws NeodgovarajuciProcesorException {
         for(Laptop laptop : laptopi) {
             if(laptop.getProcesor().equals(procesor))
                 return laptop;
         }
-        return null;
+        throw new NeodgovarajuciProcesorException("Laptop se ne nalazi u listi");
     }
 
     @Override
@@ -45,18 +42,12 @@ public class LaptopDaoSerializableFile implements LaptopDao {
     }
 
     @Override
-    public List<Laptop> vratiPodatkeIzDatoteke() {
+    public List<Laptop> vratiPodatkeIzDatoteke() throws IOException {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            while(true) {
-                try {
-                    laptopi.add((Laptop) ois.readObject());
-                } catch(IOException e) {
-                    break;
-                }
-            }
+            laptopi = (ArrayList<Laptop>) ois.readObject();
             ois.close();
-        } catch(ClassNotFoundException | IOException e) {
+        } catch(ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return this.laptopi;
